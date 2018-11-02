@@ -1,0 +1,110 @@
+// DisplayArray.h
+// Kim Buckner
+// COSC 1030, Sp 2018
+// Program 09
+// Display an array on the console output.
+//
+
+#ifndef DISPLAYARRAY_H
+#define DISPLAYARRAY_H
+
+template<typename A>
+void DisplayArray(const A data[], int arraySize)
+{
+	for (int i = 0; i<arraySize; i++) {
+		cout << data[i] << "    ";
+	}
+}
+#endif
+
+--------------------------------------------------------------------------------------------------------------------
+
+// LLParams.cpp
+// Matthew Hanley
+// COSC 1030, Section 01
+// Homework 9
+// March 30, 2018
+
+void LLParams(const double x[], const double y[], int n, double &m, double &b)
+{
+	double xsum(0);
+	double ysum(0);
+	double xysum(0);
+	double x2sum(0);
+	for (int index = 0; index < n; index++)
+	{
+		xsum = xsum + x[index];
+		ysum = ysum + y[index];
+		xysum = xysum + (x[index])*(y[index]);
+		x2sum = x2sum + (x[index])*(x[index]);
+	}
+	m = ((n*xysum) - (xsum*ysum)) / ((n*x2sum) - (xsum*xsum));
+	b = (ysum - (m*xsum)) / n; 
+}
+
+--------------------------------------------------------------------------------------------------------------------
+
+// LLParams.h
+// Kim Buckner
+// COSC 1030, Sp 2018
+// Program 09
+// Compute the linear least square line fit parameters.
+
+#ifndef LLPARAMS_H
+#define LLPARAMS_H
+
+void LLParams(const double x[], // Array of x values
+	const double y[], // Array of y values
+	int n,            // Length of input arrays
+	double &m,        // Linear least square slope of line fit
+	double &b);       // Linear least square y-intercept
+
+#endif
+
+--------------------------------------------------------------------------------------------------------------------
+
+// LLSquare.cpp
+// Kim Buckner
+// COSC 1030, Sp 2018
+// Program 09
+// Compute the linear least square line fit
+// for a set of x-y data pairs.
+// The students will run one test with --this-- data to make sure
+// their function is correct. Then they --will-- change the 
+// data and run a second test. 
+
+#include <iostream>
+using std::cout;
+using std::endl;
+
+#include "LLParams.h"
+
+#include "DisplayArray.h"
+
+int main()
+{
+	const int dataSize = 7;
+	double xData[dataSize] = { 4.1, 6.9, 9.7, 11.3, 15.5, 20.9, 24.4 };
+	double yData[dataSize] = { 2.3, 7.6, 5.5, 14.7, 14.9, 18.3, 25.7 };
+
+
+	double m, b;
+
+	LLParams(xData, yData, dataSize, m, b);
+
+	cout << "The x data set: " << endl;
+	DisplayArray(xData, dataSize);
+	cout << endl;
+
+	cout << "the y data set: " << endl;
+ 	DisplayArray(yData, dataSize);
+	cout << endl;
+
+	cout << "The linear least square parameters are as follows:" << endl;
+	cout << "  m = " << m << endl;
+	cout << "  b = " << b << endl;
+
+	system("pause");
+	return 0;
+}
+
